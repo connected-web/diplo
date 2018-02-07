@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import './Home.css';
 
-const API = 'http://localhost:49625/api/config'
+const origin = document.location.origin + ''
+const server = (origin.includes('http://localhost:3000')) ? 'http://localhost:49625' : origin
+const API = server + '/api/config'
 
 function inputChanged(ev) {
   console.log('Input Changed', ev)
