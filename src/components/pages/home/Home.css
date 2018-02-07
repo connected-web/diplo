@@ -1,0 +1,19 @@
+.Home {
+  text-align: center;
+}
+
+.Home-title {
+  font-size: 1.5em;
+}
+
+.Home-intro p {
+  font-size: large;
+}
+
+.Home-input {
+  display: inline-block;
+  width: 400px;
+  padding: 5px;
+  text-align: center;
+  font-family: monospace;
+}
