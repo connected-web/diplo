@@ -9,10 +9,15 @@
     "react-scripts": "1.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently --kill-others-on-fail \"npm run dev-react\" \"npm run dev-server\"",
+    "dev-react": "react-scripts start",
+    "dev-server": "node ./server.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "homepage": "http://localhost:49625/diplo/"
+  "homepage": "http://localhost:49625/diplo/",
+  "devDependencies": {
+    "concurrently": "^3.5.1"
+  }
 }

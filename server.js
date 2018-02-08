@@ -5,6 +5,7 @@ const app = express()
 const config = {
     port: 49625,
     buildPath: path.join(__dirname, 'build'),
+    workingPath: path.join(__dirname, 'sampledata'),
     date: new Date()
 }
 
