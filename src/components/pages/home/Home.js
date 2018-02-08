@@ -29,7 +29,7 @@ class Home extends Component {
         .then(response => response.json())
         .then(data => self.setState({
           host: server,
-          path: data.buildPath,
+          path: data.workingPath,
           date: new Date(data.date)
         }))
         .catch(ex => console.error(ex))
