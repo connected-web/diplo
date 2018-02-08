@@ -1,5 +1,5 @@
 {
   "name": "Inferno",
-  "description": "A raging stream of fire that engulfs an area with scorching heat and flame.",
-  "image": "inferno.png"
+  "description": "A raging stream of fire that engulfs a target area with scorching heat and flame.",
+  "artwork": "art/inferno.png"
 }

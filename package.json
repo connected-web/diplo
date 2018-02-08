@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "chokidar": "^2.0.1",
+    "promise-path": "^1.2.6",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2",
@@ -20,5 +22,12 @@
   "devDependencies": {
     "concurrently": "^3.5.1",
     "nodemon": "^1.14.12"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "sampledata/*",
+      "src/*"
+    ],
+    "delay": "250"
   }
 }
