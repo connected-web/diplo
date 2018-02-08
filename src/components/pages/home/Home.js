@@ -28,7 +28,7 @@ class Home extends Component {
       fetch(API)
         .then(response => response.json())
         .then(data => self.setState({
-          host: 'http://localhost:' + data.port,
+          host: server,
           path: data.buildPath,
           date: new Date(data.date)
         }))
@@ -50,7 +50,7 @@ class Home extends Component {
           <p>A pipeline tool for asset generation</p>
           <p>Current working directory:</p>
           <input name="cwd" value={this.state.path} className="Home-input" onChange={inputChanged} />
-          <p>Host: {this.state.host}, Time: {this.state.date.getUTCHours()}:{this.state.date.getUTCMinutes()}:{this.state.date.getUTCSeconds()}</p>
+          <p>API Host: {this.state.host}, Time: {this.state.date.toTimeString().substr(0,8)}</p>
         </div>
       </div>
     );
