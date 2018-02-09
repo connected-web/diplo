@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import './Home.css';
 
-const origin = document.location.origin + ''
-const server = (origin.includes('http://localhost:3000')) ? 'http://localhost:49625' : origin
-const API = server + '/api/config'
+const API = '/api/config'
 
 function inputChanged(ev) {
   console.log('Input Changed', ev)
@@ -28,14 +26,14 @@ class Home extends Component {
       fetch(API)
         .then(response => response.json())
         .then(data => self.setState({
-          host: server,
+          host: API,
           path: data.workingPath,
           date: new Date(data.date)
         }))
         .catch(ex => console.error(ex))
     }
 
-    this.updateTimer = setInterval(update, 500)
+    this.updateTimer = setInterval(update, 5000)
   }
 
   componentWillUnmount() {

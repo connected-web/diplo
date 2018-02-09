@@ -18,7 +18,9 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "homepage": "http://localhost:49625/diplo/",
+  "proxy": {
+    "/api": { "target": "http://localhost:49625" }
+  },
   "devDependencies": {
     "concurrently": "^3.5.1",
     "nodemon": "^1.14.12"
