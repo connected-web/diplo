@@ -1,72 +1,8 @@
 const express = require('express')
-const path = require('path')
-const chokidar = require('chokidar')
-const { read } = require('promise-path')
+
+const model = require('./server/model')
 
 const app = express()
-
-const assets = {}
-const config = {
-  port: 49625,
-  buildPath: path.join(__dirname, 'build'),
-  workingPath: path.join(__dirname, 'sampledata'),
-  date: new Date()
-}
-const objects = {}
-
-const model = {
-  assets,
-  config,
-  objects
-}
-
-async function update(path, remove=false) {
-  config.date = new Date()
-
-  if (path) {
-    const route = path.replace(config.workingPath, '').replace(/\\/g, '/').split('/')
-    route.shift()
-
-    const containerType = route[0]
-    const fileName = route[route.length - 1]
-    const container = model[containerType] || false
-    if (container) {
-        console.log(`${route.join(' / ')} has changed, updating ${fileName} in ${containerType}`)
-        if (containerType === 'objects' && fileName.includes('.json')) {
-          const objectType = route[1]
-          if (remove === true) {
-            if (container[objectType]) {
-              delete container[objectType][fileName]
-            }
-          }
-          else {
-            const body = JSON.parse(await read(path, 'utf8'))
-            container[objectType] = container[objectType] || {}
-            container[objectType][fileName] = body
-          }
-        }
-    } else {
-      console.log(`${route.join(' / ')} has changed, but no plan to store.`)
-    }
-  }
-}
-
-function remove(path) {
-  if (path) {
-    console.log(`${path} has been removed`)
-    update(path, true)
-  }
-}
-
-console.log('Watching for file changes:', config.workingPath)
-
-// One-liner for current directory, ignores .dotfiles
-chokidar.watch(config.workingPath, {ignored: /(^|[\/\\])\../})
-  .on('add', update)
-  .on('change', update)
-  .on('unlink', remove)
-
-setInterval(update, 250)
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -74,18 +10,28 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.get('/', (req, res) => res.redirect('/diplo'))
-app.get('/api/assets', (req, res) => res.json(assets))
-app.get('/api/config', (req, res) => res.json(config))
-app.get('/api/objects', (req, res) => res.json(objects))
-app.get('/api/global', (req, res) => res.json(model))
-app.use('/diplo', express.static(config.buildPath))
+function serve(model, key) {
+  return (req, res) => {
+    const data = key ? model[key] : model
+    const keyName = key || 'global'
 
-app.listen(config, listening)
+    res.json(data || {})
+    console.log(`[Diplo Server] [${keyName}] Serving ${req.originalUrl}`)
+  }
+}
+
+app.get('/', (req, res) => res.redirect('/diplo'))
+app.get('/api/assets', serve(model, 'assets'))
+app.get('/api/config', serve(model, 'config'))
+app.get('/api/objects', serve(model, 'objects'))
+app.get('/api/global', serve(model))
+app.use('/diplo', express.static(model.config.buildPath))
+
+app.listen(model.config, listening)
 
 function listening(err) {
   if (err) {
-    return console.error(`[Diplo Server] Unable to start server on port ${config.port}`)
+    return console.error(`[Diplo Server] Unable to start server on port ${model.config.port}`)
   }
-  console.log(`[Diplo Server] Listening on on port http://localhost:${config.port}`)
+  console.log(`[Diplo Server] Listening on on port http://localhost:${model.config.port}`)
 }
