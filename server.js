@@ -4,20 +4,21 @@ const chokidar = require('chokidar')
 const { read } = require('promise-path')
 
 const app = express()
+
+const assets = {}
 const config = {
   port: 49625,
   buildPath: path.join(__dirname, 'build'),
   workingPath: path.join(__dirname, 'sampledata'),
   date: new Date()
 }
+const objects = {}
 
 const model = {
-  objects: {},
-  assets: {}
+  assets,
+  config,
+  objects
 }
-
-const objects = model.objects
-const assets = model.assets
 
 async function update(path, remove=false) {
   config.date = new Date()
@@ -74,6 +75,7 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', (req, res) => res.redirect('/diplo'))
+app.get('/api/assets', (req, res) => res.json(assets))
 app.get('/api/config', (req, res) => res.json(config))
 app.get('/api/objects', (req, res) => res.json(objects))
 app.get('/api/global', (req, res) => res.json(model))

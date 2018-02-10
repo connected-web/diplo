@@ -12,8 +12,8 @@
 
 .Home-input {
   display: inline-block;
-  width: 400px;
-  padding: 5px;
+  padding: 10px 20px;
+  border: 2px solid #EEE;
   text-align: center;
   font-family: monospace;
 }
