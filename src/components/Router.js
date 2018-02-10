@@ -8,19 +8,44 @@ import Templates from './pages/templates/Templates';
 import Assets from './pages/assets/Assets';
 import About from './pages/about/About';
 
+import GlobalModel from './models/Global'
+
 class Router extends Component {
-    render() {
-        return (<BrowserRouter basename={'diplo'}>
-          <div className="Page">
-            <Header />
-            <Route path="/" exact component={Home} />
-            <Route path="/objects" component={Objects} />
-            <Route path="/templates" component={Templates} />
-            <Route path="/assets" component={Assets} />
-            <Route path="/about" component={About} />
-          </div>
-        </BrowserRouter>);
+  constructor() {
+    super()
+    this.model = new GlobalModel()
+    this.attachModel(this.model)
+  }
+
+  attachModel(model) {
+    model.listen((data) => {
+      console.log('Model updated', data)
+      this.setState(data)
+      this.render()
+    })
+    model.update()
+  }
+
+  render() {
+    const model = this.model
+
+    function renderPage(Class) {
+      return () => {
+        return <Class model={model} />
+      }
     }
+
+    return (<BrowserRouter basename={'diplo'}>
+      <div className="Page">
+        <Header />
+        <Route path="/" exact render={renderPage(Home)} />
+        <Route path="/objects" render={renderPage(Objects)} />
+        <Route path="/templates" render={renderPage(Templates)} />
+        <Route path="/assets" render={renderPage(Assets)} />
+        <Route path="/about" render={renderPage(About)} />
+      </div>
+    </BrowserRouter>);
+  }
 }
 
 export default Router;

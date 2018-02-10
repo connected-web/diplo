@@ -8,7 +8,8 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.1.0"
+    "react-scripts": "1.1.0",
+    "remote-model": "^1.0.2"
   },
   "scripts": {
     "start": "concurrently --kill-others-on-fail \"npm run dev-react\" \"npm run dev-server\"",
@@ -19,7 +20,9 @@
     "eject": "react-scripts eject"
   },
   "proxy": {
-    "/api": { "target": "http://localhost:49625" }
+    "/api": {
+      "target": "http://localhost:49625"
+    }
   },
   "homepage": "http://localhost:49625/diplo",
   "devDependencies": {

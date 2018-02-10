@@ -68,6 +68,7 @@ app.use(function(req, res, next) {
 app.get('/', (req, res) => res.redirect('/diplo'))
 app.get('/api/config', (req, res) => res.json(config))
 app.get('/api/objects', (req, res) => res.json(objects))
+app.get('/api/global', (req, res) => res.json(model))
 app.use('/diplo', express.static(config.buildPath))
 
 app.listen(config, listening)
