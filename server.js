@@ -19,7 +19,7 @@ const model = {
 const objects = model.objects
 const assets = model.assets
 
-async function update(path) {
+async function update(path, remove=false) {
   config.date = new Date()
 
   if (path) {
@@ -30,12 +30,19 @@ async function update(path) {
     const fileName = route[route.length - 1]
     const container = model[containerType] || false
     if (container) {
-        console.log(`${route.join(' / ')} has changed, storing ${fileName} in ${containerType}`)
+        console.log(`${route.join(' / ')} has changed, updating ${fileName} in ${containerType}`)
         if (containerType === 'objects' && fileName.includes('.json')) {
           const objectType = route[1]
-          const body = JSON.parse(await read(path, 'utf8'))
-          container[objectType] = container[objectType] || {}
-          container[objectType][fileName] = body
+          if (remove === true) {
+            if (container[objectType]) {
+              delete container[objectType][fileName]
+            }
+          }
+          else {
+            const body = JSON.parse(await read(path, 'utf8'))
+            container[objectType] = container[objectType] || {}
+            container[objectType][fileName] = body
+          }
         }
     } else {
       console.log(`${route.join(' / ')} has changed, but no plan to store.`)
@@ -46,6 +53,7 @@ async function update(path) {
 function remove(path) {
   if (path) {
     console.log(`${path} has been removed`)
+    update(path, true)
   }
 }
 

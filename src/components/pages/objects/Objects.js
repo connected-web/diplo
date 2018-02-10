@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 class Objects extends Component {
   render() {
     const model = this.props.model
-    console.log('Object data', model.data.objects)
 
     function renderObjects(data) {
       data = data || {}

@@ -19,7 +19,9 @@ class GlobalModel {
     const self = this
     fetch(API)
       .then(response => response.json())
-      .then(data => self.record(data))
+      .then(data => {
+        self.record(data)
+      })
       .catch(ex => console.error(ex))
   }
 
