@@ -24,7 +24,7 @@ class Home extends Component {
           <p>A pipeline tool for asset generation</p>
           <p>Current working directory:</p>
           <pre className="Home-input">{config.workingPath}</pre>
-          <p>API Host: {config.host}, Last updated: {config.date.toTimeString().substr(0,8)}</p>
+          <p>API Host Port: {config.port}, Last updated: {config.date.toTimeString().substr(0,8)}</p>
         </div>
       </div>
     );
