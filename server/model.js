@@ -9,11 +9,13 @@ const config = {
   date: new Date()
 }
 const objects = {}
+const templates = {}
 
 const model = {
   assets,
   config,
-  objects
+  objects,
+  templates
 }
 
 filestore.attachTo(model)
