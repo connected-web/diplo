@@ -4,17 +4,8 @@ class Objects extends Component {
   render() {
     const model = this.props.model
 
-    function renderObjects(data) {
-      data = data || {}
-
-      function mapObjects(id) {
-        const object = data[id] || {}
-        return {
-          id: id,
-          properties: object.properties,
-          items: object.items
-        }
-      }
+    function renderObjects(objects) {
+      objects = objects || []
 
       function renderObject(data) {
         return (
@@ -24,9 +15,8 @@ class Objects extends Component {
           </div>
         )
       }
-      return Object.keys(data)
-        .map(mapObjects)
-        .map(object => {
+
+      return objects.map(object => {
           return (
             <div key={object.id}>
               <h2>{object.id}</h2>

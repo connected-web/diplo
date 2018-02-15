@@ -6,6 +6,8 @@ function attachTo(model) {
 
   const virtualFileSystem = {}
   const VFS = virtualFileSystem
+  const objectIndex = {}
+  const templateIndex = {}
 
   const matchers = [{
     regex: /^\/objects\/([A-z\d]+)s\/\1-([A-z\d-]+)\.json$/,
@@ -27,7 +29,7 @@ function attachTo(model) {
     const objectType = matches[1]
     const objectId = matches[2]
 
-    const object = model.objects[objectType] || { items: [] }
+    const object = objectIndex[objectType] || { items: [] }
     if (remove) {
       object.items = object.items.filter(n => n.id !== objectId)
     } else {
@@ -35,20 +37,20 @@ function attachTo(model) {
       objectInstance.id = objectId
       object.items.push(objectInstance)
     }
-    model.objects[objectType] = object
+    objectIndex[objectType] = object
   }
 
   function updateObjectProperties(filepath, regex, remove=false) {
     const matches = filepath.match(regex)
     const objectType = matches[1]
 
-    const object = model.objects[objectType] || { items: [] }
+    const object = objectIndex[objectType] || { items: [] }
     if (remove) {
       delete object.properties
     } else {
       object.properties = JSON.parse(VFS[filepath])
     }
-    model.objects[objectType] = object
+    objectIndex[objectType] = object
   }
 
   function updateTemplateProperties(filepath, regex, remove=false) {
@@ -57,13 +59,13 @@ function attachTo(model) {
     const templateId = matches[2]
 
     const key = `${objectType}-${templateId}`
-    const template = model.templates[key] || {}
+    const template = templateIndex[key] || {}
     if (remove) {
       delete template.properties
     } else {
       template.properties = JSON.parse(VFS[filepath])
     }
-    model.templates[key] = template
+    templateIndex[key] = template
   }
 
   function updateTemplateSource(filepath, regex, remove=false) {
@@ -72,13 +74,13 @@ function attachTo(model) {
     const templateId = matches[2]
 
     const key = `${objectType}-${templateId}`
-    const template = model.templates[key] || {}
+    const template = templateIndex[key] || {}
     if (remove) {
       delete template.source
     } else {
       template.source = VFS[filepath]
     }
-    model.templates[key] = template
+    templateIndex[key] = template
   }
 
   async function updateDatastore(filepath, remove=false) {
@@ -95,12 +97,33 @@ function attachTo(model) {
         matchers.forEach((matcher) => {
           if (matcher.regex.test(pathstring)) {
             matcher.action(pathstring, matcher.regex, remove)
+            updateModelList()
           }
         })
       }
     }
+  }
 
+  function updateModelList() {
+    // Update object list
+    while (model.objects.length > 0) {
+      model.objects.pop()
+    }
+    Object.keys(objectIndex).forEach(key => {
+      const object = objectIndex[key]
+      object.id = key
+      model.objects.push(object)
+    })
 
+    // Update template list
+    while (model.templates.length > 0) {
+      model.templates.pop()
+    }
+    Object.keys(templateIndex).forEach(key => {
+      const template = templateIndex[key]
+      template.id = key
+      model.templates.push(template)
+    })
   }
 
   // Respond to file system changes
