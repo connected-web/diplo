@@ -8,6 +8,7 @@ function attachTo(model) {
   const VFS = virtualFileSystem
   const objectIndex = {}
   const templateIndex = {}
+  const assetIndex = {}
 
   const matchers = [{
     regex: /^\/objects\/([A-z\d]+)s\/\1-([A-z\d-]+)\.json$/,
@@ -21,10 +22,21 @@ function attachTo(model) {
   }, {
     regex: /^\/objects\/([A-z\d]+)s\/templates\/template-\1-([A-z\d-]+)\.(html)$/,
     action: updateTemplateSource
+  }, {
+    regex: /^\/assets\/(.*)\.(png)$/,
+    action: updateAssetSource
   }]
 
-  function updateObjectInstance(filepath, regex, remove=false) {
-    console.log('[Filestore] Matched', filepath, 'using', regex)
+  async function readText(pathstring) {
+    return read(path.join(model.config.workingPath, pathstring), 'utf8')
+  }
+
+  async function readData(pathstring) {
+    return read(path.join(model.config.workingPath, pathstring))
+  }
+
+  async function updateObjectInstance(filepath, regex, remove=false) {
+    VFS[filepath] = await readText(filepath)
     const matches = filepath.match(regex)
     const objectType = matches[1]
     const objectId = matches[2]
@@ -40,7 +52,8 @@ function attachTo(model) {
     objectIndex[objectType] = object
   }
 
-  function updateObjectProperties(filepath, regex, remove=false) {
+  async function updateObjectProperties(filepath, regex, remove=false) {
+    VFS[filepath] = await readText(filepath)
     const matches = filepath.match(regex)
     const objectType = matches[1]
 
@@ -53,7 +66,8 @@ function attachTo(model) {
     objectIndex[objectType] = object
   }
 
-  function updateTemplateProperties(filepath, regex, remove=false) {
+  async function updateTemplateProperties(filepath, regex, remove=false) {
+    VFS[filepath] = await readText(filepath)
     const matches = filepath.match(regex)
     const objectType = matches[1]
     const templateId = matches[2]
@@ -68,7 +82,8 @@ function attachTo(model) {
     templateIndex[key] = template
   }
 
-  function updateTemplateSource(filepath, regex, remove=false) {
+  async function updateTemplateSource(filepath, regex, remove=false) {
+    VFS[filepath] = await readText(filepath)
     const matches = filepath.match(regex)
     const objectType = matches[1]
     const templateId = matches[2]
@@ -83,6 +98,19 @@ function attachTo(model) {
     templateIndex[key] = template
   }
 
+  async function updateAssetSource(filepath, regex, remove=false) {
+    VFS[filepath] = await readData(filepath)
+    const matches = filepath.match(regex)
+    const assetPath = matches[1]
+    const assetType = matches[2]
+
+    const pathKey = `${assetPath}.${assetType}`
+    assetIndex[pathKey] = {
+      id: assetPath,
+      size: VFS[filepath].length
+    }
+  }
+
   async function updateDatastore(filepath, remove=false) {
     model.config.date = new Date()
 
@@ -93,11 +121,11 @@ function attachTo(model) {
       if (remove) {
         delete VFS[pathstring]
       } else {
-        VFS[pathstring] = await read(path.join(model.config.workingPath, pathstring), 'utf8')
         matchers.forEach((matcher) => {
           if (matcher.regex.test(pathstring)) {
+            console.log('[Filestore] Update Datastore', pathstring, 'matched to', matcher.regex, ':', remove)
             matcher.action(pathstring, matcher.regex, remove)
-            updateModelList()
+              .then(updateModelList)
           }
         })
       }
@@ -123,6 +151,16 @@ function attachTo(model) {
       const template = templateIndex[key]
       template.id = key
       model.templates.push(template)
+    })
+
+    // Update asset list
+    while (model.assets.length > 0) {
+      model.assets.pop()
+    }
+    Object.keys(assetIndex).forEach(key => {
+      const asset = assetIndex[key]
+      asset.id = key
+      model.assets.push(asset)
     })
   }
 

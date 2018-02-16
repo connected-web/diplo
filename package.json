@@ -22,6 +22,9 @@
   "proxy": {
     "/api": {
       "target": "http://localhost:49625"
+    },
+    "/api/assets": {
+      "target": "http://localhost:49625"
     }
   },
   "homepage": "http://localhost:49625/diplo",

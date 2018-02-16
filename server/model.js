@@ -8,6 +8,10 @@ const config = {
   workingPath: path.join(__dirname, '../sampledata'),
   date: new Date()
 }
+
+config.assetsPath = path.join(config.workingPath, 'assets')
+config.objectsPath = path.join(config.workingPath, 'objects')
+
 const objects = []
 const templates = []
 
