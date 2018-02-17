@@ -5,10 +5,10 @@ const model = require('./server/model')
 const app = express()
 
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+  next()
+})
 
 function serve(model, key) {
   return (req, res) => {
@@ -16,7 +16,7 @@ function serve(model, key) {
     const keyName = key || 'global'
 
     res.json(data || {})
-    console.log(`[Diplo Server] [${keyName}] Serving ${req.originalUrl}`)
+    // console.log(`[Diplo Server] [${keyName}] Serving ${req.originalUrl}`)
   }
 }
 
@@ -25,6 +25,7 @@ app.get('/api/assets', serve(model, 'assets'))
 app.get('/api/config', serve(model, 'config'))
 app.get('/api/objects', serve(model, 'objects'))
 app.get('/api/global', serve(model))
+app.use('/api/assets', express.static(model.config.assetsPath))
 app.use('/diplo', express.static(model.config.buildPath))
 
 app.listen(model.config, listening)
