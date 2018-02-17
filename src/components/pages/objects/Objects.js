@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import Icon from '../../icon/Icon'
 
 class Objects extends Component {
   render() {
@@ -19,7 +21,10 @@ class Objects extends Component {
       return objects.map(object => {
           return (
             <div key={object.id}>
-              <h2>{object.id}s</h2>
+              <h2>
+                <span>{object.id}s</span>
+                <Link className="button default" to={`/objects/add/${object.id}`}>Add<Icon id='plus' margin='right' /></Link>
+              </h2>
               <pre>{JSON.stringify(object.properties, null, 2)}</pre>
               {object.items.map(renderObject)}
             </div>
@@ -29,7 +34,10 @@ class Objects extends Component {
 
     return (
       <div className="Objects">
-        <h1>Objects</h1>
+        <h1>
+          <span>Objects</span>
+          <Link className="button default" to="/objects/add">Add<Icon id='plus' margin='right' /></Link>
+        </h1>
         {renderObjects(model.data.objects)}
       </div>
     )

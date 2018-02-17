@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
-import logo from './diplo.png';
-import './Header.css';
+import logo from './diplo.png'
+import './Header.css'
 
 class Header extends Component {
   render() {
