@@ -33,8 +33,42 @@ h2 {
   margin: 20px 0;
 }
 
+h1 > span, h2 > span {
+  display: inline-block;
+  margin-right: 20px;
+}
+
 h3 {
   font-size: 120%;
   font-weight: bold;
   margin: 20px 0;
+}
+
+a.button {
+  display: inline-block;
+  padding: 6px;
+  font-size: 50%;
+  border-radius: 4px;
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+.default {
+  background: #88A;
+  color: white;
+}
+
+.default:hover {
+  background: #99B;
+  color: white;
+}
+
+.positive {
+  background: #9C8;
+  color: white;
+}
+
+.positive:hover {
+  background: #AD9;
+  color: white;
 }
