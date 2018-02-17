@@ -23,7 +23,7 @@ class Objects extends Component {
             <div key={object.id}>
               <h2>
                 <span>{object.id}s</span>
-                <Link className="button default" to={`/objects/add/${object.id}`}>Add<Icon id='plus' margin='right' /></Link>
+                <Link className="button default" to={`/objects/${object.id}s/add`}>Add<Icon id='plus' margin='right' /></Link>
               </h2>
               <pre>{JSON.stringify(object.properties, null, 2)}</pre>
               {object.items.map(renderObject)}
@@ -36,7 +36,7 @@ class Objects extends Component {
       <div className="Objects">
         <h1>
           <span>Objects</span>
-          <Link className="button default" to="/objects/add">Add<Icon id='plus' margin='right' /></Link>
+          <Link className="button default" to="/objects/create">Add<Icon id='plus' margin='right' /></Link>
         </h1>
         {renderObjects(model.data.objects)}
       </div>
