@@ -19,7 +19,7 @@ class Objects extends Component {
       return objects.map(object => {
           return (
             <div key={object.id}>
-              <h2>{object.id}</h2>
+              <h2>{object.id}s</h2>
               <pre>{JSON.stringify(object.properties, null, 2)}</pre>
               {object.items.map(renderObject)}
             </div>
