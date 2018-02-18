@@ -24,10 +24,13 @@ class AddObjectToType extends Component {
 
     let self = this
 
-    function onIDChange(ev) {
-      const id = (ev.target.value || '').trim().toLowerCase().replace(/[_\s]/g, '-').replace(/[^A-z\d-]/g, '')
-      const formData = self.state.formData;
+    function onNameChange(ev) {
+      const name = ev.target.value || ''
+      const id = name.trim().toLowerCase().replace(/[_\s]/g, '-').replace(/[^A-z\d-]/g, '')
+      const formData = self.state.formData
+
       formData.id = id
+      formData.name = name
 
       checkForFormErrors()
       self.setState({
@@ -64,6 +67,10 @@ class AddObjectToType extends Component {
       }
     }
 
+    function renderReadOnlyProperty(key) {
+      return <p className="ObjectProperty" key={`input-${key}-readonly`}><label htmlFor={`input-${key}-readonly`}>name</label> {self.state.formData[key]}</p>
+    }
+
     function renderPropertyInputs(objectProperties) {
       return Object.keys(objectProperties).map(key => {
         const fieldType = objectProperties[key]
@@ -79,11 +86,15 @@ class AddObjectToType extends Component {
           checkForFormErrors()
         }
 
-        return <p className='ObjectProperty' key={keyName}>
-          <label htmlFor={keyName}>{key}</label>
-          <input name={keyName} onChange={onPropertyChange} disabled={disabled} /> : {fieldType}
-          {testFieldValue(key) ? <b className='notice warning'>Field empty</b> : ''}
-        </p>
+        if (key === 'name') {
+          return renderReadOnlyProperty(key)
+        } else {
+          return <p className='ObjectProperty' key={keyName}>
+            <label htmlFor={keyName}>{key}</label>
+            <input name={keyName} onChange={onPropertyChange} disabled={disabled} /> : {fieldType}
+            {testFieldValue(key) ? <b className='notice warning'>Field empty</b> : ''}
+          </p>
+        }
       })
     }
 
@@ -130,8 +141,8 @@ class AddObjectToType extends Component {
           <span>Add new {objectSingular}</span>
         </h1>
         <p className="ObjectProperty">
-          <label htmlFor="object-id">New Object ID</label>
-          <input name="object-id" onChange={onIDChange} disabled={self.state.saving} /> : This will be used in file names, and must be unique amongst other {objectSingular} types.
+          <label htmlFor="object-id">New {objectSingular} name</label>
+          <input name="object-id" onChange={onNameChange} disabled={self.state.saving} /> : This will be used in file names, and must be unique amongst other {objectSingular} types.
         </p>
         <p>Existing types: {objectItems.map(n => n.id).join(', ')}</p>
         {id ? propertyInputs : ''}
