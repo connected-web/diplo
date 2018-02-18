@@ -1,5 +1,7 @@
 {
   "name": "string",
   "description": "string",
-  "image": "assetpath"
+  "image": "assetpath",
+  "manaCostToUse": "number",
+  "goldCostToBuy": "number"
 }

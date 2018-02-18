@@ -1,0 +1,6 @@
+.ObjectProperty > label {
+  display: inline-block;
+  min-width: 125px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
