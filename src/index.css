@@ -4,17 +4,14 @@ body {
   font-family: sans-serif;
 }
 
-p {
-  margin: 10px 10px;
-}
-
-pre {
+p, pre {
   font-family: monospace;
   margin: 10px 10px;
   padding: 10px;
   background: #EEE;
   border-radius: 7px;
   overflow: hidden;
+  line-height: 180%;
 }
 
 .Page > div {
@@ -44,13 +41,22 @@ h3 {
   margin: 20px 0;
 }
 
-a.button {
+.button, .notice {
   display: inline-block;
   padding: 6px;
-  font-size: 50%;
+  font-size: 14px;
   border-radius: 4px;
+  margin: -1px 0 -2px 0;
+  font-weight: bold;
   text-decoration: none;
   vertical-align: middle;
+  border: 0;
+  cursor: default;
+  line-height: 100%;
+}
+
+.button:active {
+  padding: 7px 6px 5px 6px;
 }
 
 .default {
@@ -64,11 +70,35 @@ a.button {
 }
 
 .positive {
-  background: #9C8;
+  background: #7A6;
   color: white;
 }
 
 .positive:hover {
-  background: #AD9;
+  background: #8B7;
   color: white;
+}
+
+.warning {
+  color: #333;
+  background: #FEB;
+  border: 1px solid #ED9;
+  padding: 5px;
+}
+
+.disabled {
+  background: #888;
+  color: white;
+}
+
+.disabled:active {
+  padding: 6px;
+}
+
+.ButtonContainer {
+  text-align: right;
+}
+
+.ButtonContainer > .button {
+  margin: 0 0 0 8px;
 }
