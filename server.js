@@ -24,11 +24,13 @@ function serve(model, key) {
 function handle(model) {
   console.log('[Diplo Server] Create route to handle POST requests')
   return (req, res) => {
-    console.log('[Server] /api/save received', req.body)
+    const payload = req.body
+    console.log('[Server] /api/save received', payload)
     res.json({
       message: 'Handled',
       timestamp: new Date().toJSON()
     })
+    model.save(payload)
   }
 }
 
