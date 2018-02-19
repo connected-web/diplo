@@ -1,4 +1,5 @@
 const express = require('express')
+const bodyParser = require('body-parser')
 
 const model = require('./server/model')
 
@@ -20,11 +21,23 @@ function serve(model, key) {
   }
 }
 
+function handle(model) {
+  console.log('[Diplo Server] Create route to handle POST requests')
+  return (req, res) => {
+    console.log('[Server] /api/save received', req.body)
+    res.json({
+      message: 'Handled',
+      timestamp: new Date().toJSON()
+    })
+  }
+}
+
 app.get('/', (req, res) => res.redirect('/diplo'))
 app.get('/api/assets', serve(model, 'assets'))
 app.get('/api/config', serve(model, 'config'))
 app.get('/api/objects', serve(model, 'objects'))
 app.get('/api/global', serve(model))
+app.post('/api/save', bodyParser.json(), handle(model))
 app.use('/api/assets', express.static(model.config.assetsPath))
 app.use('/diplo', express.static(model.config.buildPath))
 

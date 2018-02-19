@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "body-parser": "^1.18.2",
     "chokidar": "^2.0.1",
     "promise-path": "^1.2.6",
     "react": "^16.2.0",
@@ -21,9 +22,6 @@
   },
   "proxy": {
     "/api": {
-      "target": "http://localhost:49625"
-    },
-    "/api/assets": {
       "target": "http://localhost:49625"
     }
   },
