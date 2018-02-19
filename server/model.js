@@ -1,5 +1,7 @@
+const fs = require('fs')
 const path = require('path')
 const filestore = require('./filestore')
+const noop = () => {}
 
 const assets = []
 const config = {
@@ -15,11 +17,43 @@ config.objectsPath = path.join(config.workingPath, 'objects')
 const objects = []
 const templates = []
 
+
+
+function saveObject(payload) {
+  const objectType = payload.objectType + ''
+  const objectData = payload.objectData || {}
+  const objectId = objectData.id
+  delete objectData.id
+
+  if (objectType && objectId) {
+    const filename = `${objectType}-${objectId}.json`
+    const filepath = path.join(config.objectsPath, `${objectType}s`, filename)
+    const contents = JSON.stringify(objectData, null, 2)
+    fs.writeFile(filepath, contents, 'utf8', (err, result) => {
+      console.log('[Server Model] Wrote', filepath, contents.length, 'bytes')
+      if(err) {
+        console.error('  Error:', err)
+      }
+    })
+  }
+}
+
+const actions = {
+  saveObject
+}
+
+function save(payload) {
+  payload = payload || {}
+  action = actions[payload.action] || noop
+  action(payload)
+}
+
 const model = {
   assets,
   config,
   objects,
-  templates
+  templates,
+  save
 }
 
 filestore.attachTo(model)

@@ -1,0 +1,7 @@
+{
+  "name": "Blizzard",
+  "description": "A flurry of snow and ice.",
+  "image": "art/blizzard.png",
+  "manaCostToUse": "5",
+  "goldCostToBuy": "3"
+}
