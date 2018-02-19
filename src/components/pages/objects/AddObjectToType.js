@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import './Objects.css'
 
+const SAVE_API = '/api/save'
+
 class AddObjectToType extends Component {
   constructor() {
     super()
@@ -38,21 +40,37 @@ class AddObjectToType extends Component {
       })
     }
 
-    function saveFormData(ev) {
+    async function saveFormData(ev) {
       console.log('Submit form data...')
       self.setState({saving: true})
+      const payload = {
+        action: 'saveObject',
+        objectType: objectSingular,
+        objectData: self.state.formData
+      }
 
-      setTimeout(() => {
-        self.setState({saving: false, formErrors: true})
-      }, 1500)
-
-      setTimeout(() => {
-        self.setState({formErrors: false})
-      }, 3000)
+      const notices = []
+      try {
+        const result = await fetch(SAVE_API, {
+          method: 'POST',
+          headers: new Headers({'Content-type': 'application/json'}),
+          body: JSON.stringify(payload)
+        })
+        if(result.status !== 200) {
+          notices.push(`${result.statusText} (${result.status})`)
+        }
+        else {
+          notices.push('Saved')
+        }
+      }
+      catch(ex) {
+        notices.push(ex + '')
+      }
+      self.setState({saving: false, notices})
     }
 
     function testFieldValue(key) {
-      const fieldType = objectProperties[key]
+      // const fieldType = objectProperties[key]
       return self.state.formData[key] ? false : true
     }
 
