@@ -18,7 +18,7 @@
 
 .Header-link {
   background: #111;
-  color: #9D5;
+  color: #18A87A;
   padding: 5px 10px;
   margin: 5px;
   text-decoration: none;
@@ -27,8 +27,8 @@
   border-radius: 5px;
 }
 .Header-link:hover {
-  background: #191919;
-  color: #AE6;
+  background: #171717;
+  color: #08CC8E;
 }
 
 @keyframes Header-logo-spin {
