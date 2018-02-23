@@ -12,8 +12,7 @@ class Objects extends Component {
       function renderObject(data) {
         return (
           <div key={data.id}>
-            <h3>{data.id}</h3>
-            <pre>{JSON.stringify(data, null, 2)}</pre>
+            <p><b>{data.name}</b> (<b>{data.id}</b>)</p>
           </div>
         )
       }
