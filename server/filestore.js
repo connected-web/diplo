@@ -57,6 +57,8 @@ function attachTo(model) {
     const objectId = matches[2]
 
     const object = objectIndex[objectType] || { items: [] }
+
+    // Remove any existing entries
     object.items = object.items.filter(n => n.id !== objectId)
 
     if (!remove) {
