@@ -17,8 +17,6 @@ config.objectsPath = path.join(config.workingPath, 'objects')
 const objects = []
 const templates = []
 
-
-
 function saveObject(payload) {
   const objectType = payload.objectType + ''
   const objectData = payload.objectData || {}

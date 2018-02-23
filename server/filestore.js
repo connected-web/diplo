@@ -2,6 +2,21 @@ const path = require('path')
 const chokidar = require('chokidar')
 const { read } = require('promise-path')
 
+function compareBy(key) {
+  return (a, b) => {
+    const valA = a[key].toUpperCase();
+    const valB = b[key].toUpperCase();
+
+    let comparison = 0;
+    if (valA > valB) {
+      comparison = 1;
+    } else if (valA < valB) {
+      comparison = -1;
+    }
+    return comparison;
+  }
+}
+
 function attachTo(model) {
 
   const virtualFileSystem = {}
@@ -42,13 +57,15 @@ function attachTo(model) {
     const objectId = matches[2]
 
     const object = objectIndex[objectType] || { items: [] }
-    if (remove) {
-      object.items = object.items.filter(n => n.id !== objectId)
-    } else {
+    object.items = object.items.filter(n => n.id !== objectId)
+
+    if (!remove) {
       const objectInstance = JSON.parse(VFS[filepath])
       objectInstance.id = objectId
       object.items.push(objectInstance)
+      object.items.sort(compareBy('id'))
     }
+
     objectIndex[objectType] = object
   }
 
