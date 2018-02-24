@@ -1,5 +1,5 @@
 {
   "name": "Wooden Bow",
-  "description": "A basic metal sword, one handed, fairly sharp.",
-  "artwork": "art/basic-sword.png"
+  "description": "A tall wooden bow that, given the strength, can fire a deadly arrow over 500m.",
+  "artwork": "art/wooden-bow.png"
 }
