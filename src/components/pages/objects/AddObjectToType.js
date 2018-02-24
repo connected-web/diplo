@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import './Objects.css'
 
-const SAVE_API = '/api/save'
-
 class AddObjectToType extends Component {
   constructor() {
     super()
@@ -51,11 +49,7 @@ class AddObjectToType extends Component {
 
       const notices = []
       try {
-        const result = await fetch(SAVE_API, {
-          method: 'POST',
-          headers: new Headers({'Content-type': 'application/json'}),
-          body: JSON.stringify(payload)
-        })
+        const result = await model.save(payload)
         if(result.status !== 200) {
           notices.push(`${result.statusText} (${result.status})`)
         }

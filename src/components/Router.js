@@ -27,7 +27,7 @@ class Router extends Component {
     })
     model.update()
 
-    setInterval(() => model.update(), 5000)
+    setInterval(() => model.update(), 15000)
   }
 
   render() {

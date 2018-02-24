@@ -1,4 +1,5 @@
-const API = '/api/global'
+const READ_API = '/api/global'
+const SAVE_API = '/api/save'
 
 function notify(callbacks, data) {
   callbacks.forEach(cb => cb(data))
@@ -15,9 +16,21 @@ class GlobalModel {
     notify(this.callbacks, this.state)
   }
 
+  async save(payload) {
+    const result = await fetch(SAVE_API, {
+      method: 'POST',
+      headers: new Headers({'Content-type': 'application/json'}),
+      body: JSON.stringify(payload)
+    })
+
+    this.update()
+
+    return result
+  }
+
   update() {
     const self = this
-    fetch(API)
+    fetch(READ_API)
       .then(response => response.json())
       .then(data => {
         self.record(data)
