@@ -154,3 +154,7 @@ td {
   background: #EEE;
   padding: 10px;
 }
+
+.object.name {
+  text-transform: capitalize;
+}
