@@ -136,10 +136,12 @@ class AddObjectToType extends Component {
         buttons.push(saveButton)
       }
 
-      return <p className="ButtonContainer">
-        {notices}
-        {buttons}
-      </p>
+      return <div className="ButtonContainer">
+        <p className="Buttons">
+          {notices}
+          {buttons}
+        </p>
+      </div>
     }
 
     const id = self.state.formData.id

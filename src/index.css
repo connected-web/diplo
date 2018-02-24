@@ -51,8 +51,15 @@ h3 {
   text-decoration: none;
   vertical-align: middle;
   border: 0;
-  cursor: default;
   line-height: 100%;
+}
+
+.button {
+  cursor: pointer;
+}
+
+.notice {
+  cursor: default;
 }
 
 .button:active {
@@ -99,7 +106,16 @@ h3 {
   text-align: right;
 }
 
-.ButtonContainer > .button {
+.ButtonContainer > .Buttons {
+  display: inline-block;
+  margin: 0;
+}
+
+.ButtonContainer > .Buttons > .button:first-child {
+  margin: 0;
+}
+
+.ButtonContainer > .Buttons > .button {
   margin: 0 0 0 8px;
 }
 
@@ -109,6 +125,7 @@ table {
   border-spacing: 1px;
   border-collapse: separate;
   width: 100%;
+  font-family: monospace;
 }
 
 tr {
@@ -124,6 +141,7 @@ th > div, td > div {
   text-overflow: ellipsis;
   max-height: 1em;
   word-wrap: break-word;
+  padding: 1px;
 }
 
 th {
