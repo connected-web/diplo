@@ -42,16 +42,16 @@ function attachTo(model) {
     action: updateAssetSource
   }]
 
-  async function readText(pathstring) {
-    return read(path.join(model.config.workingPath, pathstring), 'utf8')
+  async function readText(pathstring, remove=false) {
+    return (remove) ? null : read(path.join(model.config.workingPath, pathstring), 'utf8')
   }
 
-  async function readData(pathstring) {
-    return read(path.join(model.config.workingPath, pathstring))
+  async function readData(pathstring, remove=false) {
+    return (remove) ? null : read(path.join(model.config.workingPath, pathstring))
   }
 
   async function updateObjectInstance(filepath, regex, remove=false) {
-    VFS[filepath] = await readText(filepath)
+    VFS[filepath] = await readText(filepath, remove)
     const matches = filepath.match(regex)
     const objectType = matches[1]
     const objectId = matches[2]
@@ -72,7 +72,7 @@ function attachTo(model) {
   }
 
   async function updateObjectProperties(filepath, regex, remove=false) {
-    VFS[filepath] = await readText(filepath)
+    VFS[filepath] = await readText(filepath, remove)
     const matches = filepath.match(regex)
     const objectType = matches[1]
 
@@ -86,7 +86,7 @@ function attachTo(model) {
   }
 
   async function updateTemplateProperties(filepath, regex, remove=false) {
-    VFS[filepath] = await readText(filepath)
+    VFS[filepath] = await readText(filepath, remove)
     const matches = filepath.match(regex)
     const objectType = matches[1]
     const templateId = matches[2]
@@ -102,7 +102,7 @@ function attachTo(model) {
   }
 
   async function updateTemplateSource(filepath, regex, remove=false) {
-    VFS[filepath] = await readText(filepath)
+    VFS[filepath] = await readText(filepath, remove)
     const matches = filepath.match(regex)
     const objectType = matches[1]
     const templateId = matches[2]
@@ -118,7 +118,7 @@ function attachTo(model) {
   }
 
   async function updateAssetSource(filepath, regex, remove=false) {
-    VFS[filepath] = await readData(filepath)
+    VFS[filepath] = await readData(filepath, remove)
     const matches = filepath.match(regex)
     const assetPath = matches[1]
     const assetType = matches[2]
@@ -139,15 +139,15 @@ function attachTo(model) {
 
       if (remove) {
         delete VFS[pathstring]
-      } else {
-        matchers.forEach((matcher) => {
-          if (matcher.regex.test(pathstring)) {
-            console.log('[Filestore] Update Datastore', pathstring, 'matched to', matcher.regex, ':', remove)
-            matcher.action(pathstring, matcher.regex, remove)
-              .then(updateModelList)
-          }
-        })
       }
+
+      matchers.forEach((matcher) => {
+        if (matcher.regex.test(pathstring)) {
+          console.log('[Filestore] Update Datastore', pathstring, 'matched to', matcher.regex, ':', remove)
+          matcher.action(pathstring, matcher.regex, remove)
+            .then(updateModelList)
+        }
+      })
     }
   }
 
