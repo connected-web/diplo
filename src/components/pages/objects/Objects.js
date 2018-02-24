@@ -6,15 +6,22 @@ class Objects extends Component {
   render() {
     const model = this.props.model
 
+    function wbr(str) {
+      return (str || '').replace(/([/.])/g, ':wbr:$1:wbr:').split(':wbr:').map((s, i) => <span key={i}>{s}</span>)
+    }
+
     function renderObjects(objects) {
       objects = objects || []
 
-      function renderObject(data) {
-        return (
-          <div key={data.id}>
-            <p><b>{data.name}</b> (<b>{data.id}</b>)</p>
-          </div>
-        )
+      function renderTable(key, columns, items) {
+        const headerRow = <tr key={`table-${key}-items-th`}>{Object.keys(columns).map((key, i) => <th key={`th-${i}`} title={`${key} : ${columns[key]}`}><div>{key}</div></th>)}</tr>
+        const rows = []
+        items.forEach((item, i) => {
+          const itemRow = <tr key={`table-${key}-items-td-${i}`}>{Object.keys(columns).map((key, i) => <td key={`td-${i}`} title={item[key]}><div>{wbr(item[key])}</div></td>)}</tr>
+          rows.push(itemRow)
+        })
+
+        return <table key={`table-${key}-items`}><thead>{headerRow}</thead><tbody>{rows}</tbody></table>
       }
 
       return objects.map(object => {
@@ -24,8 +31,7 @@ class Objects extends Component {
                 <span>{object.id}s</span>
                 <Link className="button default" to={`/objects/${object.id}s/add`}>Add<Icon id='plus' margin='right' /></Link>
               </h2>
-              <pre>{JSON.stringify(object.properties, null, 2)}</pre>
-              {object.items.map(renderObject)}
+              {renderTable(object.id, object.properties, object.items)}
             </div>
           )
         })

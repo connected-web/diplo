@@ -6,7 +6,7 @@ body {
 
 p, pre {
   font-family: monospace;
-  margin: 10px 10px;
+  margin: 10px 0;
   padding: 10px;
   background: #EEE;
   border-radius: 7px;
@@ -15,7 +15,7 @@ p, pre {
 }
 
 .Page > div {
-  margin: 30px;
+  padding: 30px;
 }
 
 h1 {
@@ -101,4 +101,38 @@ h3 {
 
 .ButtonContainer > .button {
   margin: 0 0 0 8px;
+}
+
+table {
+  margin: 10px 0;
+  background: #FFF;
+  border-spacing: 1px;
+  border-collapse: separate;
+  width: 100%;
+}
+
+tr {
+
+}
+
+th > div {
+  word-break: break-all;
+}
+
+th > div, td > div {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 1em;
+  word-wrap: break-word;
+}
+
+th {
+  background: #DDD;
+  padding: 10px;
+  font-weight: bold;
+}
+
+td {
+  background: #EEE;
+  padding: 10px;
 }
