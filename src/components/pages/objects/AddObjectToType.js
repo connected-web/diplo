@@ -80,7 +80,7 @@ class AddObjectToType extends Component {
     }
 
     function renderReadOnlyProperty(key) {
-      return <p className="ObjectProperty" key={`input-${key}-readonly`}><label htmlFor={`input-${key}-readonly`}>name</label> {self.state.formData[key]}</p>
+      return <p className="ObjectProperty" key={`input-${key}-readonly`}><label htmlFor={`input-${key}-readonly`}>{key}</label> {self.state.formData[key]}</p>
     }
 
     function renderPropertyInputs(objectProperties) {
@@ -151,9 +151,7 @@ class AddObjectToType extends Component {
 
     return (
       <div className="Objects">
-        <h1>
-          <span>Add new {objectSingular}</span>
-        </h1>
+        <h1>Add new {objectSingular}</h1>
         <p className="ObjectProperty">
           <label htmlFor="object-id">New {objectSingular} name</label>
           <input name="object-id" onChange={onNameChange} disabled={self.state.saving} /> : This will be used in file names, and must be unique amongst other {objectSingular} types.
