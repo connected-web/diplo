@@ -90,9 +90,6 @@ class CreateObjectType extends Component {
 
     function checkForDataErrors(formData) {
       const errors = Object.keys(formData).map(testFieldValue(formData))
-
-      console.log('[Create Object Type] Errors:', errors, self.state.formData)
-
       if (errors.filter(n => n).length) {
         return ['Please complete the form']
       }
@@ -132,7 +129,6 @@ class CreateObjectType extends Component {
     function renderPropertyInput(field, index) {
       const disabled = self.state.saving
       const formData = self.state.formData
-      const fieldTest = testFieldValue(formData)
 
       function onNameChange(ev) {
         field.name = ev.target.value
@@ -194,8 +190,13 @@ class CreateObjectType extends Component {
       </div>
     }
 
+    function renderReadOnlyProperty(key) {
+      const formData = self.state.formData
+      return <p className="ObjectProperty" key={`read-only-${key}`}>{key} : {formData[key]} (required)</p>
+    }
+
     const id = self.state.id
-    const propertyInputs = [renderPropertyInputs(self.state.fields)]
+    const propertyInputs = [renderReadOnlyProperty('id'), renderReadOnlyProperty('name'), renderPropertyInputs(self.state.fields)]
 
     const exampleOutput = (id) ?
       <pre>
@@ -211,9 +212,10 @@ class CreateObjectType extends Component {
           <label htmlFor="object-id">New type name</label>
           <input name="object-id" onChange={onNameChange} disabled={self.state.saving} /> : This will be used in file names, and must be unique amongst other object types.
         </p>
-        <p>Existing types: {objects.map(n => n.id).join(', ')}</p>
+        <p className="advice">Advice: Existing types are {objects.map(n => n.id).join(', ')}</p>
+        {id ? <h2>Properties</h2> : ''}
         {id ? propertyInputs : ''}
-        <p><span>Advice: Add new properties, e.g. cost: number, description: string, artwork: assetpath</span></p>
+        {id ? <p className="advice">Advice: Add new properties, e.g. cost: number, description: string, artwork: assetpath</p> : ''}
         {renderButtons()}
         {exampleOutput}
       </div>
