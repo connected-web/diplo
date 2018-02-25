@@ -1,0 +1,6 @@
+{
+  "name": "string",
+  "artwork": "assetpath",
+  "description": "string",
+  "max health": "number"
+}

@@ -1,5 +1,6 @@
 const fs = require('fs')
 const path = require('path')
+const { make } = require('promise-path')
 const filestore = require('./filestore')
 const noop = () => {}
 
@@ -36,8 +37,30 @@ function saveObject(payload) {
   }
 }
 
+async function saveObjectType(payload) {
+  const objectType = payload.objectType + ''
+  const objectData = payload.objectData || {}
+  delete objectData.id
+
+  if (objectType) {
+    const objectPath = path.join(config.objectsPath, `${objectType}s`)
+    await make(objectPath)
+
+    const filename = `${objectType}_properties.json`
+    const filepath = path.join(objectPath, filename)
+    const contents = JSON.stringify(objectData, null, 2)
+    fs.writeFile(filepath, contents, 'utf8', (err, result) => {
+      console.log('[Server Model] Wrote', filepath, contents.length, 'bytes')
+      if(err) {
+        console.error('  Error:', err)
+      }
+    })
+  }
+}
+
 const actions = {
-  saveObject
+  saveObject,
+  saveObjectType
 }
 
 function save(payload) {
