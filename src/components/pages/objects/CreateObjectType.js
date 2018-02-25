@@ -109,7 +109,7 @@ class CreateObjectType extends Component {
       self.setState({saving: true})
       const payload = {
         action: 'saveObjectType',
-        objectType: self.state.formData.id,
+        objectType: self.state.id,
         objectData: self.state.formData
       }
 
