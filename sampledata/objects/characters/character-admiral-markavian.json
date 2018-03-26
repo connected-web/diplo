@@ -1,0 +1,6 @@
+{
+  "name": "Admiral Markavian",
+  "artwork": "artwork/admirals/markavian.png",
+  "description": "The fearless commander of the fleet.",
+  "max health": "10"
+}
