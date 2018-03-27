@@ -31,7 +31,7 @@ class Objects extends Component {
               {renderTable(object.id, object.properties, object.items)}
               <div className="ButtonContainer">
                 <p className="Buttons">
-                  <Link className="button default" to={`/objects/${object.id}s/add`}>Add new <span className="object name">{object.id}</span><Icon id='plus' margin='right' /></Link>
+                  <Link className="button default" to={`/objects/${object.id}s/add`}><Icon id='plus-circle' margin='left' />Add new <span className="object name">{object.id}</span></Link>
                 </p>
               </div>
             </div>
@@ -45,7 +45,7 @@ class Objects extends Component {
         <pre>Known types: {(model.data.objects || []).map(obj => `${obj.id}s (${obj.items.length})`).join(', ')}</pre>
         <div className="ButtonContainer">
           <p className="Buttons">
-            <Link className="button default" to="/objects/create">Add new type<Icon id='plus' margin='right' /></Link>
+            <Link className="button default" to="/objects/create"><Icon id='plus-circle' margin='left' />Add new type</Link>
           </p>
         </div>
         {renderObjects(model.data.objects)}
