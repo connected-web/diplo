@@ -13,15 +13,25 @@ class Objects extends Component {
     function renderObjects(objects) {
       objects = objects || []
 
-      function renderTable(key, columns, items) {
-        const headerRow = <tr key={`table-${key}-items-th`}>{Object.keys(columns).map((key, i) => <th key={`th-${i}`} title={`${key} : ${columns[key]}`}><div>{key}</div></th>)}</tr>
+      function renderTable(objectId, columns, items) {
+        const headerRow = <tr key={`table-${objectId}-items-th`}>{Object.keys(columns).map((key, i) => <th key={`th-${i}`} title={`${key} : ${columns[key]}`}><div>{key}</div></th>)}</tr>
         const rows = []
         items.forEach((item, i) => {
-          const itemRow = <tr key={`table-${key}-items-td-${i}`}>{Object.keys(columns).map((key, i) => <td key={`td-${i}`} title={item[key]}><div>{wbr(item[key])}</div></td>)}</tr>
+          const itemId = item.name.trim().toLowerCase().replace(/[_\s]/g, '-').replace(/[^A-z\d-]/g, '')
+
+          function renderCell(key, i) {
+            const cellValue = item[key]
+            if (key === 'name') {
+              return <td key={`td-${i}`} title={cellValue}><div><Link className="view item" to={`/objects/${objectId}s/view/${itemId}`}>{wbr(cellValue)}</Link></div></td>
+            }
+            return <td key={`td-${i}`} title={cellValue}><div>{wbr(cellValue)}</div></td>
+          }
+
+          const itemRow = <tr key={`table-${objectId}-items-td-${i}`}>{Object.keys(columns).map(renderCell)}</tr>
           rows.push(itemRow)
         })
 
-        return <table key={`table-${key}-items`}><thead>{headerRow}</thead><tbody>{rows}</tbody></table>
+        return <table key={`table-${objectId}-items`}><thead>{headerRow}</thead><tbody>{rows}</tbody></table>
       }
 
       return objects.map(object => {
