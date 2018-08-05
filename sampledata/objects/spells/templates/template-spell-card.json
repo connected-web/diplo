@@ -2,6 +2,7 @@
   "renderer": "webshot",
   "size": {
     "width": 825,
-    "height": 1125
+    "height": 1125,
+    "scale": 1.0
   }
 }
