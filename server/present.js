@@ -1,7 +1,5 @@
 const handlebars = require('handlebars')
 
-const templates = {}
-
 function configure(model) {
 
   function serve(req, res) {
@@ -9,15 +7,11 @@ function configure(model) {
     const itemId = req.params.itemId
     const templateId = req.params.templateId
 
-    const template = model.templates.filter(template => template.id === templateId)[0]
-    const type = model.objects.filter(object => object.id === typeId)[0]
-    const item = type && type.items.filter(item => item.id === itemId)[0]
+    const template = model.templates.filter(template => template.id === templateId)[0] || {}
+    const type = model.objects.filter(object => object.id === typeId)[0] || { items: [] }
+    const item = type && type.items.filter(item => item.id === itemId)[0] || false
 
-    let templateFn = templates[templateId]
-    if (!templateFn) {
-      templateFn = handlebars.compile(template.source || '')
-      templates[templateId] = templateFn
-    }
+    let templateFn = handlebars.compile(template.source || '')
 
     const context = `Trying to render template for ${templateId} using ${typeId}, ${itemId}`
 
