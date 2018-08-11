@@ -17,7 +17,7 @@ function configure(model) {
 
     console.log(`[SERVE] ${context}`)
 
-    if (!template) {
+    if (!template || !template.source) {
       console.error(`[SERVE] No template found with template id: '${templateId}'`)
       return res.status(404).json({status: 404, error: `No template found with template id: '${templateId}'`, context})
     }
