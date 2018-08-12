@@ -1,7 +1,7 @@
 {
   "name": "Splat",
   "description": "Splatter everywhere.",
-  "image": "art/splatter.png",
+  "image": "art/grass.png",
   "manaCostToUse": "20",
   "goldCostToBuy": "10"
 }

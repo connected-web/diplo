@@ -2,6 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const { make } = require('promise-path')
 const filestore = require('./filestore')
+const regeneratePresentables = require('./presentables').regenerate
 const noop = () => {}
 
 const assets = []
@@ -17,6 +18,7 @@ config.objectsPath = path.join(config.workingPath, 'objects')
 
 const objects = []
 const templates = []
+const presentables = []
 
 function saveObject(payload) {
   const objectType = payload.objectType + ''
@@ -69,12 +71,18 @@ function save(payload) {
   action(payload)
 }
 
+function updated() {
+  regeneratePresentables(model)
+}
+
 const model = {
   assets,
   config,
   objects,
   templates,
-  save
+  presentables,
+  save,
+  updated
 }
 
 filestore.attachTo(model)

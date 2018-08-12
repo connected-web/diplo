@@ -96,6 +96,8 @@ function attachTo(model) {
     if (remove) {
       delete template.properties
     } else {
+      template.objectType = objectType
+      template.templateId = templateId
       template.properties = JSON.parse(VFS[filepath])
     }
     templateIndex[key] = template
@@ -112,6 +114,8 @@ function attachTo(model) {
     if (remove) {
       delete template.source
     } else {
+      template.objectType = objectType
+      template.templateId = templateId
       template.source = VFS[filepath]
     }
     templateIndex[key] = template
@@ -131,6 +135,7 @@ function attachTo(model) {
   }
 
   async function updateDatastore(filepath, remove=false) {
+    // Keep the date up to date
     model.config.date = new Date()
 
     if (filepath) {
@@ -181,6 +186,9 @@ function attachTo(model) {
       asset.id = key
       model.assets.push(asset)
     })
+
+    // Notify listeners that the model has changed
+    model.updated()
   }
 
   // Respond to file system changes
