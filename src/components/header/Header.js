@@ -14,6 +14,7 @@ class Header extends Component {
         <Link className="Header-link" to="/">Home</Link>
         <Link className="Header-link" to="/objects">Objects</Link>
         <Link className="Header-link" to="/templates">Templates</Link>
+        <Link className="Header-link" to="/presentables">Presentables</Link>
         <Link className="Header-link" to="/assets">Asset Viewer</Link>
         <Link className="Header-link" to="/about">About</Link>
       </header>

@@ -7,6 +7,7 @@ import AddObjectToType from './pages/objects/AddObjectToType'
 import CreateObjectType from './pages/objects/CreateObjectType'
 import Objects from './pages/objects/Objects'
 import Templates from './pages/templates/Templates'
+import Presentables from './pages/presentables/Presentables'
 import Assets from './pages/assets/Assets'
 import About from './pages/about/About'
 
@@ -47,6 +48,7 @@ class Router extends Component {
         <Route path="/objects/create" render={renderPage(CreateObjectType, this)} />
         <Route path="/objects/:object/add" render={renderPage(AddObjectToType, this)} />
         <Route path="/templates" render={renderPage(Templates, this)} />
+        <Route path="/presentables" render={renderPage(Presentables, this)} />
         <Route path="/assets" render={renderPage(Assets, this)} />
         <Route path="/about" render={renderPage(About, this)} />
       </div>

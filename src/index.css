@@ -4,7 +4,7 @@ body {
   font-family: sans-serif;
 }
 
-p, pre {
+p, pre, li {
   font-family: monospace;
   margin: 10px 0;
   padding: 10px;
@@ -12,6 +12,10 @@ p, pre {
   border-radius: 7px;
   overflow: hidden;
   line-height: 180%;
+}
+
+li {
+  border-left: 20px solid #999;
 }
 
 .Page > div {
