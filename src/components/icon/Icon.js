@@ -6,7 +6,7 @@ class Icon extends Component {
   render() {
     const marginClass = this.props.margin || 'none'
     return (
-      <i class={['Icon', `fas fa-${this.props.id}`, marginClass].join(' ')}></i>
+      <i className={['Icon', `fas fa-${this.props.id}`, marginClass].join(' ')}></i>
     )
   }
 }
