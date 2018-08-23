@@ -128,7 +128,6 @@ class CreateObjectType extends Component {
 
     function renderPropertyInput(field, index) {
       const disabled = self.state.saving
-      const formData = self.state.formData
 
       function onNameChange(ev) {
         field.name = ev.target.value
