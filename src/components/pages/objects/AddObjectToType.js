@@ -112,6 +112,15 @@ class AddObjectToType extends Component {
       })
     }
 
+    function grammarSpace(acc, item, index, array) {
+      acc = acc || []
+      if (index > 0) {
+        acc.push(', ')
+      }
+      acc.push(item)
+      return acc
+    }
+
     function renderButtons() {
       const saveButton = <a onClick={saveFormData} className='button positive' key='saveObject'><Icon id='save' margin='left' />Save</a>
       const savingButton =  <a className='button disabled' key='button-saving'><Icon id='clock' margin='left' />Saving...</a>
@@ -163,7 +172,7 @@ class AddObjectToType extends Component {
           <input name="object-id" onChange={onNameChange} disabled={self.state.saving} /><br/>
           The name will be used to generate an id used in file names; and as such must be unique amongst other {objectSingular} types.
         </p>
-        <p>Existing items for reference: {objectItems.map(renderObjectLink)} ({objectItems.length} total)</p>
+        <p>Existing items for reference: {objectItems.map(renderObjectLink).reduce(grammarSpace, [])} ({objectItems.length} total)</p>
         {id ? propertyInputs : ''}
         {renderButtons()}
         {exampleOutput}
