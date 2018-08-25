@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import Icon from '../../icon/Icon'
 import './Objects.css'
 
@@ -139,6 +140,10 @@ class AddObjectToType extends Component {
       </div>
     }
 
+    function renderObjectLink(object) {
+      return <Link id={`view-object-${object.id}`} to={`/objects/${objectPlural}/view/${object.id}`}>{object.name}</Link>
+    }
+
     const id = self.state.formData.id
     const idProperty = <p className="ObjectProperty" key='input-id-string'><label htmlFor='input-id-string'>id</label> {self.state.formData.id}</p>
     const propertyInputs = [idProperty].concat(renderPropertyInputs(objectProperties))
@@ -155,9 +160,10 @@ class AddObjectToType extends Component {
         <h1>Add new {objectSingular}</h1>
         <p className="ObjectProperty">
           <label htmlFor="object-id">New {objectSingular} name</label>
-          <input name="object-id" onChange={onNameChange} disabled={self.state.saving} /> : This will be used in file names, and must be unique amongst other {objectSingular} types.
+          <input name="object-id" onChange={onNameChange} disabled={self.state.saving} /><br/>
+          The name will be used to generate an id used in file names; and as such must be unique amongst other {objectSingular} types.
         </p>
-        <p>Existing types: {objectItems.map(n => n.id).join(', ')}</p>
+        <p>Existing items for reference: {objectItems.map(renderObjectLink)} ({objectItems.length} total)</p>
         {id ? propertyInputs : ''}
         {renderButtons()}
         {exampleOutput}

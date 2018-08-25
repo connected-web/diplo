@@ -209,7 +209,8 @@ class CreateObjectType extends Component {
         <h1>Create New Object Type</h1>
         <p className="ObjectProperty">
           <label htmlFor="object-id">New type name</label>
-          <input name="object-id" onChange={onNameChange} disabled={self.state.saving} /> : This will be used in file names, and must be unique amongst other object types.
+          <input name="object-id" onChange={onNameChange} disabled={self.state.saving} /><br />
+          This will be used in file names, and must be unique amongst other object types.
         </p>
         <p className="advice">Advice: Existing types are {objects.map(n => n.id).join(', ')}</p>
         {id ? <h2>Properties</h2> : ''}
