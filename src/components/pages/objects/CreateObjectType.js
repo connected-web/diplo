@@ -195,7 +195,7 @@ class CreateObjectType extends Component {
     }
 
     const id = self.state.id
-    const propertyInputs = [renderReadOnlyProperty('id'), renderReadOnlyProperty('name'), renderPropertyInputs(self.state.fields)]
+    const propertyInputs = [renderReadOnlyProperty('id'), renderPropertyInputs(self.state.fields)]
 
     const exampleOutput = (id) ?
       <pre>
@@ -207,15 +207,15 @@ class CreateObjectType extends Component {
     return (
       <div className="Objects">
         <h1>Create New Object Type</h1>
+        <p className="advice">Existing types for reference are {objects.map(n => n.id).join(', ')}.</p>
         <p className="ObjectProperty">
-          <label htmlFor="object-id">New type name</label>
-          <input name="object-id" onChange={onNameChange} disabled={self.state.saving} /><br />
-          This will be used in file names, and must be unique amongst other object types.
+          <label htmlFor="object-id">New name</label>
+          <input name="object-id" onChange={onNameChange} disabled={self.state.saving} /> (type name)<br />
+          The type name will be used as a unique identifier to select between different types of object.
         </p>
-        <p className="advice">Advice: Existing types are {objects.map(n => n.id).join(', ')}</p>
-        {id ? <h2>Properties</h2> : ''}
-        {id ? propertyInputs : ''}
-        {id ? <p className="advice">Advice: Add new properties, e.g. cost: number, description: string, artwork: assetpath</p> : ''}
+        <h2>Properties</h2>
+        {propertyInputs}
+        <p className="advice">Tip: Add new properties to your object, e.g. cost: number, description: string, artwork: assetpath</p>
         {renderButtons()}
         {exampleOutput}
       </div>
