@@ -81,12 +81,8 @@ class AddObjectToType extends Component {
       }
     }
 
-    function renderReadOnlyProperty(key) {
-      return <p className="ObjectProperty" key={`input-${key}-readonly`}><label htmlFor={`input-${key}-readonly`}>{key}</label> {self.state.formData[key]}</p>
-    }
-
     function renderPropertyInputs(objectProperties) {
-      return Object.keys(objectProperties).map(key => {
+      return Object.keys(objectProperties).filter(n => n !== 'name').map(key => {
         const fieldType = objectProperties[key]
         const keyName = `input-${key}-${fieldType}`
         const disabled = self.state.saving
@@ -100,15 +96,11 @@ class AddObjectToType extends Component {
           checkForFormErrors()
         }
 
-        if (key === 'name') {
-          return renderReadOnlyProperty(key)
-        } else {
-          return <p className='ObjectProperty' key={keyName}>
-            <label htmlFor={keyName}>{key}</label>
-            <input name={keyName} onChange={onPropertyChange} disabled={disabled} /> : {fieldType}
-            {testFieldValue(key) ? <b className='notice warning'>Field empty</b> : ''}
-          </p>
-        }
+        return <p className='ObjectProperty' key={keyName}>
+          <label htmlFor={keyName}>{key}</label>
+          <input name={keyName} onChange={onPropertyChange} disabled={disabled} /> : {fieldType}
+          {testFieldValue(key) ? <b className='notice warning'>Field empty</b> : ''}
+        </p>
       })
     }
 
@@ -150,7 +142,7 @@ class AddObjectToType extends Component {
     }
 
     function renderObjectLink(object) {
-      return <Link id={`view-object-${object.id}`} to={`/objects/${objectPlural}/view/${object.id}`}>{object.name}</Link>
+      return <Link key={`view-object-${object.id}`} to={`/objects/${objectPlural}/view/${object.id}`}>{object.name}</Link>
     }
 
     const id = self.state.formData.id
@@ -167,13 +159,13 @@ class AddObjectToType extends Component {
     return (
       <div className="Objects">
         <h1>Add new {objectSingular}</h1>
-        <p className="ObjectProperty">
-          <label htmlFor="object-id">New {objectSingular} name</label>
-          <input name="object-id" onChange={onNameChange} disabled={self.state.saving} /><br/>
-          The name will be used to generate an id used in file names; and as such must be unique amongst other {objectSingular} types.
-        </p>
         <p>Existing items for reference: {objectItems.map(renderObjectLink).reduce(grammarSpace, [])} ({objectItems.length} total)</p>
-        {id ? propertyInputs : ''}
+        <p className="ObjectProperty">
+          <label htmlFor="object-id">New object name</label>
+          <input name="object-id" onChange={onNameChange} disabled={self.state.saving} /> ({objectSingular} name)<br/>
+          The {objectSingular} name will be used as a unique identifier to select between {objectSingular} types.
+        </p>
+        {propertyInputs}
         {renderButtons()}
         {exampleOutput}
       </div>
