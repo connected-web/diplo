@@ -8,8 +8,8 @@ class Presentables extends Component {
     function renderPresentables(presentables) {
       return presentables.map(item => {
         const path = `/api/present/${item.objectType}/${item.itemId}/${item.objectType}-${item.templateId}`
-        return <div key={item.id} className={`presentable ${item.id}`}>
-          <div class="label">{item.assetId}</div>
+        return <div key={`presentable-${item.itemId}`} className={`presentable ${item.itemId}`}>
+          <h3>{item.assetId}</h3>
           <p><a href={path}>{path}</a></p>
         </div>
       })
