@@ -29,7 +29,6 @@ class ViewObjectOfType extends Component {
     function renderItemProperties(item) {
       return Object.keys(objectProperties).map(key => {
         const itemValue = item[key]
-        console.log(item, itemValue, key)
         return <p className='ObjectProperty' key={`property-${key}`}><label>{key}</label><b>{itemValue}</b></p>
       })
     }
