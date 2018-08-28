@@ -41,10 +41,12 @@ class ViewObjectOfType extends Component {
             <Link className="button default" to={`/objects/${objectPlural}/edit/${objectId}`}><Icon id='edit' margin='left' />Edit</Link>
           </p>
         </div>
-        <h3>Object item</h3>
         {renderItemProperties(objectItem)}
+        <h3>Object data</h3>
+        <p>This object is represented internally as:</p>
         <pre>{JSON.stringify(objectItem, null, 2)}</pre>
         <h3>Object properties</h3>
+        <p>For objects of type '{objectSingular}' the following properties are expected:</p>
         <pre>{JSON.stringify(objectProperties, null, 2)}</pre>
       </div>
     )
