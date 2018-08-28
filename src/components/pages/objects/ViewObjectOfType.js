@@ -35,7 +35,7 @@ class ViewObjectOfType extends Component {
 
     return (
       <div className="Objects">
-        <h1>View {objectSingular} : {objectId}</h1>
+        <h1>View {objectSingular} : {objectItem.name || objectId}</h1>
         <div className="ButtonContainer" style={{marginTop: '-60px'}}>
           <p className="Buttons">
             <Link className="button default" to={`/objects/${objectPlural}/edit/${objectId}`}><Icon id='edit' margin='left' />Edit</Link>
