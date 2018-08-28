@@ -6,6 +6,7 @@ import Home from './pages/home/Home'
 import AddObjectToType from './pages/objects/AddObjectToType'
 import CreateObjectType from './pages/objects/CreateObjectType'
 import ViewObjectOfType from './pages/objects/ViewObjectOfType'
+import EditObjectOfType from './pages/objects/EditObjectOfType'
 import Objects from './pages/objects/Objects'
 import Templates from './pages/templates/Templates'
 import Presentables from './pages/presentables/Presentables'
@@ -49,6 +50,7 @@ class Router extends Component {
         <Route path="/objects/create" render={renderPage(CreateObjectType, this)} />
         <Route path="/objects/:object/add" render={renderPage(AddObjectToType, this)} />
         <Route path="/objects/:object/view/:id" render={renderPage(ViewObjectOfType, this)} />
+        <Route path="/objects/:object/edit/:id" render={renderPage(EditObjectOfType, this)} />
         <Route path="/templates" render={renderPage(Templates, this)} />
         <Route path="/presentables" render={renderPage(Presentables, this)} />
         <Route path="/assets" render={renderPage(Assets, this)} />
