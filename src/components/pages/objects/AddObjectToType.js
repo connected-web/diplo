@@ -66,7 +66,6 @@ class AddObjectToType extends Component {
     }
 
     function testFieldValue(key) {
-      // const fieldType = objectProperties[key]
       return self.state.formData[key] ? false : true
     }
 

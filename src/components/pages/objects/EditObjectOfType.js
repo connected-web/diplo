@@ -17,6 +17,9 @@ class EditObjectOfType extends Component {
   render() {
     const model = this.props.model
     const objects = model.data.objects  || []
+
+    let self = this
+
     // const url = this.props.match.url
     const objectPlural = this.props.match.params.object
     const objectSingular = objectPlural.slice(0, -1)
@@ -26,10 +29,34 @@ class EditObjectOfType extends Component {
     const objectItem = objectItems.filter(n => n.id === objectId)[0] || {}
     const objectProperties = objectParent.properties || {}
 
+    function testFieldValue(key) {
+      return self.state.formData[key] ? false : true
+    }
+
+    function checkForFormErrors() {
+      const errors = Object.keys(objectProperties).map(testFieldValue).filter(n => n)
+
+      if (errors.length) {
+        self.setState({notices: ['Please complete the form'], formErrors: true})
+      }
+      else {
+        self.setState({notices: [], formErrors: false})
+      }
+    }
     function renderItemProperties(item) {
       return Object.keys(objectProperties).map(key => {
         const itemValue = item[key]
-        return <p className='ObjectProperty' key={`property-${key}`}><label>{key}</label><b>{itemValue}</b></p>
+
+        function onPropertyChange(ev) {
+          const formData = self.state.formData
+          formData[key] = ev.target.value
+          self.setState({
+            formData
+          })
+          checkForFormErrors()
+        }
+        
+        return <p className='ObjectProperty' key={`property-${key}`}><label>{key}</label><input type='text' value={itemValue} onChange={onPropertyChange} /></p>
       })
     }
 

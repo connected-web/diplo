@@ -5,6 +5,15 @@
   vertical-align: middle;
 }
 
+.ObjectProperty > input {
+  display: inline-block;
+  padding: 8px;
+  margin: -4px -2px;
+  font-family: monospace;
+  font-weight: normal;
+  border: none;
+}
+
 .ObjectProperty > .notice {
   margin-left: 10px;
 }
