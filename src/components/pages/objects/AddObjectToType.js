@@ -113,9 +113,9 @@ class AddObjectToType extends Component {
     }
 
     function renderButtons() {
-      const saveButton = <a onClick={saveFormData} className='button positive' key='saveObject'><Icon id='save' margin='left' />Save</a>
-      const savingButton =  <a className='button disabled' key='button-saving'><Icon id='clock' margin='left' />Saving...</a>
-      const saveDisabled = <a className='button disabled' key='button-save-disabled'><Icon id='save' margin='left' />Save</a>
+      const saveButton = <button onClick={saveFormData} className='button positive' key='saveObject'><Icon id='save' margin='left' />Save</button>
+      const savingButton =  <button className='button disabled' key='button-saving'><Icon id='clock' margin='left' />Saving...</button>
+      const saveDisabled = <button className='button disabled' key='button-save-disabled'><Icon id='save' margin='left' />Save</button>
 
       const notices = (self.state.notices || []).map((notice, n) => {
         return <b className='notice warning' key={`notice-${n}`}>{notice}</b>
