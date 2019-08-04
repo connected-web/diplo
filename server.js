@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 
 const model = require('./server/model')
 const present = require('./server/present')
+const render = require('./server/render')
 
 const app = express()
 
@@ -41,6 +42,7 @@ app.get('/api/config', serve(model, 'config'))
 app.get('/api/objects', serve(model, 'objects'))
 app.get('/api/global', serve(model))
 app.get('/api/present/:typeId/:itemId/:templateId', present(model))
+app.get('/api/render/:typeId/:itemId/:templateId', render(model))
 app.post('/api/save', bodyParser.json(), handle(model))
 app.use('/api/assets', express.static(model.config.assetsPath))
 app.use('/diplo', express.static(model.config.buildPath))
