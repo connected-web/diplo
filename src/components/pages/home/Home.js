@@ -14,7 +14,7 @@ class Home extends Component {
 
   render() {
     const model = this.props.model
-    const config = model.data.config || {}
+    const config = (model && model.data && model.data.config) || {}
     config.date = new Date(Date.parse(config.date))
 
     return (
